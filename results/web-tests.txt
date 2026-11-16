@@ -1,0 +1,72 @@
+
+> n-body-lab@1.0.0 test:browser
+> playwright test
+
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:31] "GET / HTTP/1.1" 200 -
+
+Running 5 tests using 1 worker
+
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET / HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /style.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /visual.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /pool.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /kernel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /data/benchmark.json HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /data/validation.json HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /worker.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /worker.js HTTP/1.1" 304 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /worker.js HTTP/1.1" 304 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /kernel.js HTTP/1.1" 304 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /kernel.js HTTP/1.1" 304 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:32] "GET /kernel.js HTTP/1.1" 304 -
+  ✓  1 tests/browser/app.spec.mjs:2:1 › native data, charts, filters and live simulation (867ms)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET / HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /style.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /kernel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /pool.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /visual.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /data/benchmark.json HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /data/validation.json HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /worker.js HTTP/1.1" 200 -
+  ✓  2 tests/browser/app.spec.mjs:26:1 › five real browser benchmark repetitions and JSON export (812ms)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET / HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /style.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /kernel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /pool.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /visual.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /data/benchmark.json HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:33] "GET /data/validation.json HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /worker.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /kernel.js HTTP/1.1" 304 -
+  ✓  3 tests/browser/app.spec.mjs:43:1 › cancelling a measurement restores controls without partial results (248ms)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET / HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /style.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /pool.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /visual.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /kernel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /data/benchmark.json HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /data/validation.json HTTP/1.1" 200 -
+  ✓  4 tests/browser/app.spec.mjs:50:1 › mobile view fits the screen and keeps interactions usable (299ms)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET / HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /style.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /pool.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /kernel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /visual.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /worker.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /worker.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /worker.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /worker.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /worker.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /kernel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /kernel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /kernel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /kernel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:50:34] "GET /kernel.js HTTP/1.1" 200 -
+  ✓  5 tests/browser/app.spec.mjs:58:1 › missing native data has an honest fallback (320ms)
+
+  5 passed (3.4s)
