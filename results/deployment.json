@@ -1,21 +1,20 @@
 {
-  "commit": "4473f076a1f920658eb7ccc24ff92aa610b8d6c8",
-  "checked_at": "2026-11-16T22:58:12.882806+00:00",
-  "verified": false,
-  "candidate_urls": [
-    "https://n-body-metrix0s-projects.vercel.app",
-    "https://n-body-git-main-metrix0s-projects.vercel.app"
-  ],
-  "candidate_errors": [
-    {
-      "url": "https://n-body-metrix0s-projects.vercel.app",
-      "error": ""
-    },
-    {
-      "url": "https://n-body-git-main-metrix0s-projects.vercel.app",
-      "error": ""
-    }
-  ],
-  "inspection_urls": [],
-  "note": "No successful public Vercel deployment with this commit was available yet."
+  "build_status": "success",
+  "checked_deployment_commit": "e40aeb09112006f658801d85c329686b8596cf0e",
+  "application_source_commit": "113b6295435c6281024c1f05f249269910623f3e",
+  "url": "https://n-body-metrix0s-projects.vercel.app",
+  "inspection_url": "https://vercel.com/metrix0s-projects/n-body/J5aseWofXS1pykTBWEn4JSK2YUzT",
+  "access": "Vercel authentication required on the automatic project alias",
+  "public_content_verified": false,
+  "browser_validation": {
+    "outcome": "success",
+    "tests": 5,
+    "commit": "113b6295435c6281024c1f05f249269910623f3e",
+    "run": "https://github.com/metrix0/n-body/actions/runs/43973779918"
+  },
+  "native_validation": {
+    "passed": 75,
+    "reference": "byte-for-byte"
+  },
+  "note": "Vercel reports a completed deployment. Anonymous requests to the automatic alias redirect to Vercel sign-in; deployed content could not be checked anonymously."
 }

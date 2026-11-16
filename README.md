@@ -94,6 +94,8 @@ npm run build
 python3 -m http.server 4173 --directory dist
 ```
 
+A demonstração está em [n-body no Vercel](https://n-body-metrix0s-projects.vercel.app). Esse endereço automático exige autenticação no Vercel conforme a proteção atual do projeto; a confirmação do build e a limitação de acesso estão em `results/deployment.json`.
+
 O deploy Vercel publica `dist/`, conforme `vercel.json`. O site não exige API, banco ou segredos. Usa Canvas com projeção 3D, controles de câmera, alternância 2D/3D e duas simulações com condições iniciais idênticas. Não há serviços externos de rastreamento.
 
 **O navegador usa Web Workers, não OpenMP.** A tela identifica essa distinção. A visualização avança os dois estados juntos e não simula ganho artificial pela velocidade da animação. O benchmark local executa as versões separadamente, alterna sua ordem, faz aquecimento e cinco repetições de dez passos, inclui cópia/comunicação e publica erro, média, desvio, speedup e eficiência. A criação dos workers fica fora após o aquecimento. O usuário pode exportar o JSON.
