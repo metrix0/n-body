@@ -5,6 +5,7 @@ on:
 permissions:
   contents: write
   deployments: read
+  statuses: read
 jobs:
   inspect:
     runs-on: ubuntu-24.04
@@ -44,7 +45,9 @@ jobs:
           def check(url):
               result={"url":url}
               try:
-                  html=public(url+"/")
+                  response=urllib.request.urlopen(url+"/",timeout=8)
+                  html=response.read()
+                  result.update(final_url=response.url,title=re.findall(r"<title>(.*?)</title>",html.decode("utf-8",errors="replace"))[:1])
                   data=json.loads(public(url+"/data/benchmark.json"))
                   result["verified"]=b"canvas-seq" in html and data.get("source_commit")==expected
               except Exception as exc:
