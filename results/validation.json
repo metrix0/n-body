@@ -1,0 +1,10 @@
+{
+  "passed": 75,
+  "reference": "byte-for-byte",
+  "threads": [
+    1,
+    2,
+    4,
+    8
+  ]
+}

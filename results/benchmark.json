@@ -1,0 +1,1319 @@
+{
+  "schema": 1,
+  "generated_at": "2026-11-16T22:43:43.788746+00:00",
+  "source_commit": "a3d14bcb6d6f879e47eec2f136bd48be5086d0eb",
+  "environment": {
+    "cpu": "Intel(R) Xeon(R) 6975P-C",
+    "logical_cpus": 4,
+    "affinity_cpus": 4,
+    "cpu_quota": null,
+    "memory": "16078424 kB",
+    "os": "Linux-7.0.0-1014-aws-x86_64-with-glibc2.39",
+    "compiler": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+    "flags": "-O3 -std=c11 -Wall -Wextra -ffp-contract=off; parallel: -fopenmp",
+    "binding": {
+      "OMP_PROC_BIND": "close",
+      "OMP_PLACES": "cores",
+      "OMP_DYNAMIC": "false"
+    }
+  },
+  "methodology": {
+    "steps": 10,
+    "repeats": 5,
+    "timing": "CLOCK_MONOTONIC: simulation kernel only; includes OpenMP team creation and barriers, excludes input/output and allocation",
+    "order": "deterministically shuffled per round",
+    "warmup": "one unmeasured run per configuration and size",
+    "validation": "SHA-256 of every final state equals sequential output",
+    "environment_note": "Shared CI runner; measurements depend on load and available CPU time."
+  },
+  "inputs": [
+    {
+      "n": 256,
+      "seed": 42,
+      "sha256": "f7be725c8fdec8bd2e8d70a8342f9bb535d905f8e0be04e0aa3d6f92747b2ad9",
+      "distribution": "uniform [-1,1], six float32 values per body"
+    },
+    {
+      "n": 1024,
+      "seed": 42,
+      "sha256": "5a656d6a5056d1311e9e5c3c0e1f0b1dafbaf67a299b92d8a78a26b272e00976",
+      "distribution": "uniform [-1,1], six float32 values per body"
+    },
+    {
+      "n": 4096,
+      "seed": 42,
+      "sha256": "21a22a00efbcce4ce3d530a9a7adb33d130fa8cf6556d2a2ae0e1ae7e604831f",
+      "distribution": "uniform [-1,1], six float32 values per body"
+    },
+    {
+      "n": 8192,
+      "seed": 42,
+      "sha256": "468f78fea40ec3832a6a012a625335a192c4733673f93935cb3fdc957a94b9aa",
+      "distribution": "uniform [-1,1], six float32 values per body"
+    }
+  ],
+  "rows": [
+    {
+      "n": 256,
+      "mode": "sequential",
+      "threads": 1,
+      "mean": 0.00197561,
+      "stddev": 1.666125100345109e-05,
+      "speedup": 1.0,
+      "efficiency": 1.0,
+      "samples": [
+        0.001982058,
+        0.002001147,
+        0.001970701,
+        0.001965679,
+        0.001958465
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 256,
+      "mode": "openmp",
+      "threads": 1,
+      "mean": 0.0020046626,
+      "stddev": 6.103506230028741e-06,
+      "speedup": 0.9855074863969627,
+      "efficiency": 0.9855074863969627,
+      "samples": [
+        0.002011095,
+        0.001994949,
+        0.002006696,
+        0.002003241,
+        0.002007332
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 256,
+      "mode": "openmp",
+      "threads": 2,
+      "mean": 0.0012555244,
+      "stddev": 1.698418357767009e-05,
+      "speedup": 1.5735337361822679,
+      "efficiency": 0.7867668680911339,
+      "samples": [
+        0.001278333,
+        0.001248413,
+        0.001267965,
+        0.00123743,
+        0.001245481
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 256,
+      "mode": "openmp",
+      "threads": 4,
+      "mean": 0.0011618954,
+      "stddev": 7.06749901308797e-06,
+      "speedup": 1.700333782197606,
+      "efficiency": 0.4250834455494015,
+      "samples": [
+        0.00115631,
+        0.001163173,
+        0.001173366,
+        0.001160521,
+        0.001156107
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 256,
+      "mode": "openmp",
+      "threads": 8,
+      "mean": 0.0016926526,
+      "stddev": 2.1508152135876313e-05,
+      "speedup": 1.1671680296358509,
+      "efficiency": 0.14589600370448136,
+      "samples": [
+        0.001679479,
+        0.001724705,
+        0.001670095,
+        0.00168631,
+        0.001702674
+      ],
+      "repeats": 5,
+      "oversubscribed": true
+    },
+    {
+      "n": 1024,
+      "mode": "sequential",
+      "threads": 1,
+      "mean": 0.0312735334,
+      "stddev": 2.137987209503209e-05,
+      "speedup": 1.0,
+      "efficiency": 1.0,
+      "samples": [
+        0.031295144,
+        0.031261038,
+        0.031246128,
+        0.031270701,
+        0.031294656
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 1024,
+      "mode": "openmp",
+      "threads": 1,
+      "mean": 0.0316705582,
+      "stddev": 4.3539405481700636e-05,
+      "speedup": 0.9874639153028885,
+      "efficiency": 0.9874639153028885,
+      "samples": [
+        0.031730773,
+        0.031672226,
+        0.031614825,
+        0.031687843,
+        0.031647124
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 1024,
+      "mode": "openmp",
+      "threads": 2,
+      "mean": 0.0167395626,
+      "stddev": 0.00022453858431191714,
+      "speedup": 1.8682407747022014,
+      "efficiency": 0.9341203873511007,
+      "samples": [
+        0.016614086,
+        0.017138911,
+        0.016659728,
+        0.016667524,
+        0.016617564
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 1024,
+      "mode": "openmp",
+      "threads": 4,
+      "mean": 0.0160271694,
+      "stddev": 1.9070621930078372e-05,
+      "speedup": 1.9512823892658175,
+      "efficiency": 0.4878205973164544,
+      "samples": [
+        0.01603863,
+        0.016050024,
+        0.016004745,
+        0.016010558,
+        0.01603189
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 1024,
+      "mode": "openmp",
+      "threads": 8,
+      "mean": 0.0166872088,
+      "stddev": 8.049941825690456e-05,
+      "speedup": 1.8741021206614255,
+      "efficiency": 0.23426276508267818,
+      "samples": [
+        0.016671301,
+        0.016581032,
+        0.016800288,
+        0.016719699,
+        0.016663724
+      ],
+      "repeats": 5,
+      "oversubscribed": true
+    },
+    {
+      "n": 4096,
+      "mode": "sequential",
+      "threads": 1,
+      "mean": 0.4994669428,
+      "stddev": 0.0002098203536390157,
+      "speedup": 1.0,
+      "efficiency": 1.0,
+      "samples": [
+        0.499363868,
+        0.499420145,
+        0.499752537,
+        0.499589489,
+        0.499208675
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 4096,
+      "mode": "openmp",
+      "threads": 1,
+      "mean": 0.5045001652,
+      "stddev": 0.00047356164688845405,
+      "speedup": 0.9900233483610364,
+      "efficiency": 0.9900233483610364,
+      "samples": [
+        0.50464673,
+        0.504601235,
+        0.504502682,
+        0.503729314,
+        0.505020865
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 4096,
+      "mode": "openmp",
+      "threads": 2,
+      "mean": 0.2555135606,
+      "stddev": 0.0002338150434185015,
+      "speedup": 1.9547570846226152,
+      "efficiency": 0.9773785423113076,
+      "samples": [
+        0.255672277,
+        0.255548898,
+        0.255153522,
+        0.255752814,
+        0.255440292
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 4096,
+      "mode": "openmp",
+      "threads": 4,
+      "mean": 0.247909341,
+      "stddev": 0.00046051457607061263,
+      "speedup": 2.0147161086600605,
+      "efficiency": 0.5036790271650151,
+      "samples": [
+        0.248451875,
+        0.248219448,
+        0.247396589,
+        0.248001225,
+        0.247477568
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 4096,
+      "mode": "openmp",
+      "threads": 8,
+      "mean": 0.247976632,
+      "stddev": 0.00021158269156880679,
+      "speedup": 2.014169394800071,
+      "efficiency": 0.2517711743500089,
+      "samples": [
+        0.247868862,
+        0.247703116,
+        0.248273457,
+        0.247996821,
+        0.248040904
+      ],
+      "repeats": 5,
+      "oversubscribed": true
+    },
+    {
+      "n": 8192,
+      "mode": "sequential",
+      "threads": 1,
+      "mean": 1.9991618722,
+      "stddev": 0.00043066086519174905,
+      "speedup": 1.0,
+      "efficiency": 1.0,
+      "samples": [
+        1.998940549,
+        1.99952305,
+        1.999372425,
+        1.999464537,
+        1.9985088
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 8192,
+      "mode": "openmp",
+      "threads": 1,
+      "mean": 2.020223921,
+      "stddev": 0.002209631562657371,
+      "speedup": 0.9895743988668472,
+      "efficiency": 0.9895743988668472,
+      "samples": [
+        2.019551832,
+        2.019948744,
+        2.019192131,
+        2.024040067,
+        2.018386831
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 8192,
+      "mode": "openmp",
+      "threads": 2,
+      "mean": 1.024901236,
+      "stddev": 0.0020709606631297865,
+      "speedup": 1.9505897758523143,
+      "efficiency": 0.9752948879261572,
+      "samples": [
+        1.027149441,
+        1.023382568,
+        1.024000677,
+        1.027104423,
+        1.022869071
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 8192,
+      "mode": "openmp",
+      "threads": 4,
+      "mean": 0.9949674862,
+      "stddev": 0.002414681365347125,
+      "speedup": 2.009273569164797,
+      "efficiency": 0.5023183922911992,
+      "samples": [
+        0.998501135,
+        0.993476095,
+        0.99632227,
+        0.993978345,
+        0.992559586
+      ],
+      "repeats": 5,
+      "oversubscribed": false
+    },
+    {
+      "n": 8192,
+      "mode": "openmp",
+      "threads": 8,
+      "mean": 0.994579019,
+      "stddev": 0.0013090695011921567,
+      "speedup": 2.0100583603805138,
+      "efficiency": 0.2512572950475642,
+      "samples": [
+        0.993005075,
+        0.993417865,
+        0.995184459,
+        0.995199554,
+        0.996088142
+      ],
+      "repeats": 5,
+      "oversubscribed": true
+    }
+  ],
+  "raw": [
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.00115631,
+      "trial": 1,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "sequential",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.001982058,
+      "trial": 1,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.001278333,
+      "trial": 1,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.001679479,
+      "trial": 1,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.002011095,
+      "trial": 1,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.001724705,
+      "trial": 2,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.001163173,
+      "trial": 2,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "sequential",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.002001147,
+      "trial": 2,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.001994949,
+      "trial": 2,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.001248413,
+      "trial": 2,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.001173366,
+      "trial": 3,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "sequential",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.001970701,
+      "trial": 3,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.002006696,
+      "trial": 3,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.001267965,
+      "trial": 3,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.001670095,
+      "trial": 3,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "sequential",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.001965679,
+      "trial": 4,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.002003241,
+      "trial": 4,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.00123743,
+      "trial": 4,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.00168631,
+      "trial": 4,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.001160521,
+      "trial": 4,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.001245481,
+      "trial": 5,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "sequential",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.001958465,
+      "trial": 5,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.002007332,
+      "trial": 5,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.001156107,
+      "trial": 5,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "openmp",
+      "n": 256,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.001702674,
+      "trial": 5,
+      "sha256": "6a0e8e2806fed8c6814c6780643e6e9df4afce4d433f15bf8a076ebb3bb683a4"
+    },
+    {
+      "mode": "sequential",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031295144,
+      "trial": 1,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031730773,
+      "trial": 1,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.016614086,
+      "trial": 1,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.016671301,
+      "trial": 1,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.01603863,
+      "trial": 1,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.016050024,
+      "trial": 2,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.016581032,
+      "trial": 2,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031672226,
+      "trial": 2,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.017138911,
+      "trial": 2,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "sequential",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031261038,
+      "trial": 2,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.016659728,
+      "trial": 3,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031614825,
+      "trial": 3,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "sequential",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031246128,
+      "trial": 3,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.016800288,
+      "trial": 3,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.016004745,
+      "trial": 3,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "sequential",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031270701,
+      "trial": 4,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.016010558,
+      "trial": 4,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.016719699,
+      "trial": 4,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031687843,
+      "trial": 4,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.016667524,
+      "trial": 4,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.016663724,
+      "trial": 5,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.01603189,
+      "trial": 5,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031647124,
+      "trial": 5,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "sequential",
+      "n": 1024,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.031294656,
+      "trial": 5,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 1024,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.016617564,
+      "trial": 5,
+      "sha256": "d75a67575864ad1cb3e7aa31e10e17aa7c7f13f4e9d971db6f75814e07e5c8e6"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.255672277,
+      "trial": 1,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.248451875,
+      "trial": 1,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "sequential",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.499363868,
+      "trial": 1,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.50464673,
+      "trial": 1,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.247868862,
+      "trial": 1,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.248219448,
+      "trial": 2,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.504601235,
+      "trial": 2,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.247703116,
+      "trial": 2,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.255548898,
+      "trial": 2,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "sequential",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.499420145,
+      "trial": 2,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.255153522,
+      "trial": 3,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.248273457,
+      "trial": 3,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.504502682,
+      "trial": 3,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.247396589,
+      "trial": 3,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "sequential",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.499752537,
+      "trial": 3,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "sequential",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.499589489,
+      "trial": 4,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.255752814,
+      "trial": 4,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.248001225,
+      "trial": 4,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.247996821,
+      "trial": 4,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.503729314,
+      "trial": 4,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.248040904,
+      "trial": 5,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.247477568,
+      "trial": 5,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 0.255440292,
+      "trial": 5,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.505020865,
+      "trial": 5,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "sequential",
+      "n": 4096,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 0.499208675,
+      "trial": 5,
+      "sha256": "68891322c6214f23d9f9c60e816433fa53fa3570f6fe5a822ab3658a044bbd6a"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 1.027149441,
+      "trial": 1,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 2.019551832,
+      "trial": 1,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.998501135,
+      "trial": 1,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.993005075,
+      "trial": 1,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "sequential",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 1.998940549,
+      "trial": 1,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "sequential",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 1.99952305,
+      "trial": 2,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 2.019948744,
+      "trial": 2,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.993476095,
+      "trial": 2,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 1.023382568,
+      "trial": 2,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.993417865,
+      "trial": 2,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.99632227,
+      "trial": 3,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.995184459,
+      "trial": 3,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 1.024000677,
+      "trial": 3,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 2.019192131,
+      "trial": 3,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "sequential",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 1.999372425,
+      "trial": 3,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "sequential",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 1.999464537,
+      "trial": 4,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 2.024040067,
+      "trial": 4,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.993978345,
+      "trial": 4,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 1.027104423,
+      "trial": 4,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.995199554,
+      "trial": 4,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 2.018386831,
+      "trial": 5,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 4,
+      "seconds": 0.992559586,
+      "trial": 5,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 8,
+      "seconds": 0.996088142,
+      "trial": 5,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "sequential",
+      "n": 8192,
+      "steps": 10,
+      "threads": 1,
+      "seconds": 1.9985088,
+      "trial": 5,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    },
+    {
+      "mode": "openmp",
+      "n": 8192,
+      "steps": 10,
+      "threads": 2,
+      "seconds": 1.022869071,
+      "trial": 5,
+      "sha256": "3ed19a1d2fb9e74e979763768b1fc63dd2697e2240b25bf487253521e5f71cbb"
+    }
+  ]
+}
