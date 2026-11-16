@@ -67,8 +67,8 @@ for attempt in range(6):
                     continue
                 try:
                     page,_=public(target)
-                    page=page.decode("utf-8",errors="replace").replace("\\\\u002F","/").replace("\\\\/","/")
-                    found=sorted(set(re.findall(r"[a-z0-9][a-z0-9.-]*\\.vercel\\.app",page)))
+                    page=page.decode("utf-8",errors="replace").replace(chr(92)+"u002F","/").replace(chr(92)+"/","/")
+                    found=sorted(set(re.findall(r"[a-z0-9][a-z0-9.-]*[.]vercel[.]app",page)))
                     report["inspection_urls"]=found
                     for host in found:
                         base="https://"+host
