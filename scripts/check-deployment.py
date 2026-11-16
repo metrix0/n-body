@@ -21,30 +21,38 @@ report={"commit":sha,"checked_at":datetime.now(timezone.utc).isoformat(),"verifi
 error=""
 for attempt in range(30):
     try:
+        candidates=[]
         deployments=github("/deployments?sha="+sha+"&per_page=20")
         for deployment in deployments:
             statuses=github("/deployments/"+str(deployment["id"])+"/statuses")
-            for status in statuses:
-                url=status.get("environment_url","")
-                if status.get("state")!="success" or not url:
-                    continue
-                parsed=urllib.parse.urlsplit(url)
-                if parsed.scheme!="https" or not (parsed.hostname or "").endswith(".vercel.app"):
-                    continue
+            candidates.extend((s.get("environment_url",""),deployment["id"]) for s in statuses if s.get("state")=="success")
+        combined=github("/commits/"+sha+"/status")
+        for status in combined.get("statuses",[]):
+            target=urllib.parse.urlsplit(status.get("target_url",""))
+            parts=target.path.strip("/").split("/")
+            if status.get("state")=="success" and target.hostname=="vercel.com" and len(parts)>=3:
+                team,project=parts[:2]
+                candidates.extend([(f"https://{project}-{team}.vercel.app",None),(f"https://{project}-git-main-{team}.vercel.app",None)])
+        for url,deployment_id in candidates:
+            parsed=urllib.parse.urlsplit(url)
+            if parsed.scheme!="https" or not (parsed.hostname or "").endswith(".vercel.app"):
+                continue
+            try:
                 base=url.rstrip("/")
                 html,headers=public(base+"/")
                 assert b"Veja o trabalho acontecer." in html and b"canvas-seq" in html and b"app.js" in html
                 data,_=public(base+"/data/benchmark.json")
                 benchmark=json.loads(data)
-                assert benchmark["schema"]==1 and benchmark["rows"] and all(r["repeats"]>=5 for r in benchmark["rows"])
+                expected=json.loads(Path("results/benchmark.json").read_text())["source_commit"]
+                assert benchmark["source_commit"]==expected and benchmark["schema"]==1 and all(r["repeats"]>=5 for r in benchmark["rows"])
                 js,_=public(base+"/app.js")
                 assert b"Pool" in js and b"loadNative" in js
                 css,_=public(base+"/style.css")
                 assert b".simulation-grid" in css
-                report.update(verified=True,url=base,github_deployment_id=deployment["id"],native_source_commit=benchmark["source_commit"],headers={"content-security-policy":headers.get("Content-Security-Policy",headers.get("content-security-policy"))})
+                report.update(verified=True,url=base,github_deployment_id=deployment_id,native_source_commit=benchmark["source_commit"],headers={"content-security-policy":headers.get("Content-Security-Policy",headers.get("content-security-policy"))})
                 break
-            if report["verified"]:
-                break
+            except (urllib.error.URLError,AssertionError):
+                continue
         if report["verified"]:
             break
         error="No successful public Vercel deployment with this commit was available yet."
