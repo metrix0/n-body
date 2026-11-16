@@ -1,6 +1,21 @@
 {
-  "commit": "1e07c8a2ef916fe8c2115211c5b67b0f07978af5",
-  "checked_at": "2026-11-16T22:51:48.748496+00:00",
+  "commit": "4473f076a1f920658eb7ccc24ff92aa610b8d6c8",
+  "checked_at": "2026-11-16T22:58:12.882806+00:00",
   "verified": false,
+  "candidate_urls": [
+    "https://n-body-metrix0s-projects.vercel.app",
+    "https://n-body-git-main-metrix0s-projects.vercel.app"
+  ],
+  "candidate_errors": [
+    {
+      "url": "https://n-body-metrix0s-projects.vercel.app",
+      "error": ""
+    },
+    {
+      "url": "https://n-body-git-main-metrix0s-projects.vercel.app",
+      "error": ""
+    }
+  ],
+  "inspection_urls": [],
   "note": "No successful public Vercel deployment with this commit was available yet."
 }
