@@ -7,6 +7,7 @@ const integer=v=>Number(v).toLocaleString('pt-BR');
 const seqView=new Universe($('canvas-seq'));
 const parView=new Universe($('canvas-par'),true);
 let seqState,parState,seqPool,parPool,running=false,busy=false,epoch=0,steps=0;
+let liveSamples=[];
 let activePools=[],nativeData=null,localResult=null;
 const hardware=navigator.hardwareConcurrency||2;
 $('workers').value=String(Math.min(4,hardware>=4?4:hardware>=2?2:1));
@@ -19,7 +20,10 @@ function stop(){
   $('play').textContent='Iniciar simulação ↗';
 }
 function reset(){
-  stop();steps=0;
+  stop();steps=0;liveSamples=[];
+  $('current-speedup').textContent='—×';
+  seqView.zoom=parView.zoom=1;
+  $('canvas-seq').dataset.zoom=$('canvas-par').dataset.zoom='1';
   seqState=initialState(Number($('bodies').value));parState=seqState.slice();
   seqView.set(seqState);parView.set(parState,Number($('workers').value));
   $('seq-steps').textContent=$('par-steps').textContent='0';
@@ -34,9 +38,17 @@ async function frame(token){
       const start=performance.now();const out=await pool.step(state);
       return {out,ms:performance.now()-start};
     };
-    const [a,b]=await Promise.all([measure(seqPool,seqState),measure(parPool,parState)]);
+    let a,b;
+    if(steps%2){b=await measure(parPool,parState);a=await measure(seqPool,seqState);}
+    else{a=await measure(seqPool,seqState);b=await measure(parPool,parState);}
     if(!running||epoch!==token)return;
     seqState=a.out;parState=b.out;steps++;
+    liveSamples.push([a.ms,b.ms]);
+    if(liveSamples.length>20)liveSamples.shift();
+    if(liveSamples.length>1){
+      const totals=liveSamples.slice(1).reduce((sum,pair)=>[sum[0]+pair[0],sum[1]+pair[1]],[0,0]);
+      $('current-speedup').textContent=fmt(totals[0]/totals[1])+'×';
+    }
     seqView.set(seqState);parView.set(parState);
     $('seq-time').textContent=fmt(a.ms,1)+' ms';$('par-time').textContent=fmt(b.ms,1)+' ms';
     $('seq-steps').textContent=$('par-steps').textContent=integer(steps);
@@ -56,7 +68,7 @@ $('play').addEventListener('click',()=>{
   running=true;const token=++epoch;
   seqPool=new Pool(1);parPool=new Pool(Number($('workers').value));
   $('play').textContent='Pausar simulação Ⅱ';
-  status('Visualização sincronizada. Para medir speedup, execute o benchmark com as versões separadas.');
+  status('Simulação em execução.');
   frame(token);
 });
 for(const id of ['bodies','workers'])$(id).addEventListener('change',reset);
@@ -66,6 +78,9 @@ for(const [id,three] of [['view3d',true],['view2d',false]])$(id).addEventListene
   $('view3d').classList.toggle('selected',three);$('view2d').classList.toggle('selected',!three);
   $('view3d').setAttribute('aria-pressed',String(three));$('view2d').setAttribute('aria-pressed',String(!three));
   seqView.draw();parView.draw();
+});
+for(const [id,other] of [['canvas-seq',parView],['canvas-par',seqView]])$(id).addEventListener('zoom',({detail})=>{
+  other.zoom=detail;other.canvas.dataset.zoom=String(detail);other.draw();
 });
 for(const [id,other] of [['canvas-seq',parView],['canvas-par',seqView]])$(id).addEventListener('orbit',({detail})=>{
   other.yaw=detail.yaw;other.pitch=detail.pitch;seqView.draw();parView.draw();
@@ -107,6 +122,7 @@ $('benchmark').addEventListener('click',async()=>{
     $('seq-steps').textContent=$('par-steps').textContent=String(steps);
     $('seq-time').textContent=fmt(seq.mean/iterations,1)+' ms';$('par-time').textContent=fmt(par.mean/iterations,1)+' ms';
     $('live-equality').textContent='✓ Resultados idênticos';
+    $('current-speedup').textContent=fmt(speedup)+'×';
     const root=$('browser-results');root.replaceChildren();root.hidden=false;
     for(const [label,value] of [['Sequencial · média ± desvio',fmt(seq.mean)+' ± '+fmt(seq.stddev)+' ms'],['Paralelo · média ± desvio',fmt(par.mean)+' ± '+fmt(par.stddev)+' ms'],['Speedup',fmt(speedup)+'×'],['Eficiência',fmt(100*speedup/p,1)+'%']]){
       const cell=document.createElement('div'),name=document.createElement('span'),v=document.createElement('strong');name.textContent=label;v.textContent=value;cell.append(name,v);root.append(cell);
@@ -119,7 +135,7 @@ $('benchmark').addEventListener('click',async()=>{
       const a=document.createElement('a');a.href=url;a.download='n-body-browser-benchmark.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     });
     detail.append(download);root.append(detail);
-    status('Medição concluída: cinco repetições válidas. Resultados deste navegador; não substituem o benchmark em C.');
+    status('Medição concluída: cinco repetições válidas.');
   }catch(error){if(epoch===token)status(error.message,true);}
   finally{for(const pool of pools)pool.close();activePools=[];busy=false;lock(false);}
 });
@@ -167,6 +183,18 @@ function renderChart(){
       const title=document.createElementNS(svg.namespaceURI,'title');title.textContent='N='+n+', p='+row.threads+': '+fmt(value(row),3);c.append(title);
     }
   });
+  let chartZoom=1,originX=0,originY=0;
+  svg.addEventListener('wheel',e=>{
+    e.preventDefault();
+    const rect=svg.getBoundingClientRect(),old=chartZoom;
+    const delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?rect.height:1);
+    chartZoom=Math.max(1,Math.min(8,old*Math.exp(-delta*0.002)));
+    const px=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+    const py=Math.max(0,Math.min(1,(e.clientY-rect.top)/rect.height));
+    originX=Math.max(0,Math.min(680-680/chartZoom,originX+px*(680/old-680/chartZoom)));
+    originY=Math.max(0,Math.min(270-270/chartZoom,originY+py*(270/old-270/chartZoom)));
+    svg.setAttribute('viewBox',[originX,originY,680/chartZoom,270/chartZoom].join(' '));
+  },{passive:false});
   root.append(svg);$('chart-legend').replaceChildren();
   ns.forEach((n,i)=>{const item=make('span'),dot=make('i');dot.style.backgroundColor=palette[i%palette.length];item.append(dot,document.createTextNode('N = '+integer(n)));$('chart-legend').append(item);});
 }

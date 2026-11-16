@@ -2,7 +2,16 @@ const COLORS = ['#77a0ff','#72e4c0','#e6b985','#c89aee','#ed8daa','#7acfe5','#ce
 export class Universe {
   constructor(canvas, parallel=false) {
     this.canvas=canvas; this.ctx=canvas.getContext('2d'); this.parallel=parallel;
-    this.yaw=0.38; this.pitch=0.55; this.three=true; this.count=4; this.state=null;
+    this.zoom=1; this.yaw=0.38; this.pitch=0.55; this.three=true; this.count=4; this.state=null;
+    canvas.dataset.zoom='1';
+    canvas.addEventListener('wheel',e=>{
+      e.preventDefault();
+      const delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?canvas.clientHeight:1);
+      this.zoom=Math.max(0.25,Math.min(8,this.zoom*Math.exp(-delta*0.002)));
+      canvas.dataset.zoom=String(this.zoom);
+      this.draw();
+      canvas.dispatchEvent(new CustomEvent('zoom',{detail:this.zoom}));
+    },{passive:false});
     let dragging=false, lastX=0, lastY=0;
     canvas.addEventListener('pointerdown', e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);});
     canvas.addEventListener('pointermove', e=>{
@@ -36,7 +45,7 @@ export class Universe {
     };
     let extent=22;
     if(state) for(let i=0;i<state.length;i+=6) extent=Math.max(extent,Math.hypot(state[i],state[i+1],state[i+2]));
-    const scale=Math.min(w,h)*0.39/Math.min(extent,300);
+    const scale=Math.min(w,h)*0.39*this.zoom/Math.min(extent,300);
     ctx.strokeStyle='#34516d38';ctx.lineWidth=0.6;
     for(const radius of [6,12,18,24]){
       ctx.beginPath();

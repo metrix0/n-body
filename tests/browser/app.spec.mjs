@@ -64,3 +64,31 @@ test('missing native data has an honest fallback',async({page})=>{
   await expect(page.locator('#seq-steps')).not.toHaveText('0');
   await page.click('#play');
 });
+
+test('scroll zoom is synchronized and does not scroll the page',async({page})=>{
+  await page.goto('/');
+  await page.locator('#canvas-seq').scrollIntoViewIfNeeded();
+  const before=await page.evaluate(()=>window.scrollY);
+  await page.locator('#canvas-seq').hover();await page.mouse.wheel(0,-240);
+  await expect.poll(()=>page.locator('#canvas-seq').getAttribute('data-zoom')).not.toBe('1');
+  expect(await page.evaluate(()=>window.scrollY)).toBe(before);
+  expect(await page.locator('#canvas-par').getAttribute('data-zoom')).toBe(await page.locator('#canvas-seq').getAttribute('data-zoom'));
+  await page.click('#reset');await expect(page.locator('#canvas-seq')).toHaveAttribute('data-zoom','1');
+  await page.locator('#chart svg').scrollIntoViewIfNeeded();
+  const scroll=await page.evaluate(()=>window.scrollY);
+  await page.locator('#chart svg').hover();await page.mouse.wheel(0,-240);
+  await expect(page.locator('#chart svg')).not.toHaveAttribute('viewBox','0 0 680 270');
+  expect(await page.evaluate(()=>window.scrollY)).toBe(scroll);
+});
+test('large inputs and current speedup are available',async({page})=>{
+  await page.goto('/');
+  for(const n of ['4096','8192']){
+    await page.selectOption('#bodies',n);
+    await expect(page.locator('#bodies')).toHaveValue(n);
+  }
+  await page.selectOption('#bodies','256');
+  await page.click('#play');
+  await expect(page.locator('#current-speedup')).not.toHaveText('—×');
+  await page.click('#play');
+  await page.click('#reset');await expect(page.locator('#current-speedup')).toHaveText('—×');
+});
