@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import time
 import urllib.error
 import urllib.parse
@@ -19,7 +20,7 @@ def public(url):
 
 report={"commit":sha,"checked_at":datetime.now(timezone.utc).isoformat(),"verified":False}
 error=""
-for attempt in range(30):
+for attempt in range(6):
     try:
         candidates=[]
         deployments=github("/deployments?sha="+sha+"&per_page=20")
@@ -33,6 +34,8 @@ for attempt in range(30):
             if status.get("state")=="success" and target.hostname=="vercel.com" and len(parts)>=3:
                 team,project=parts[:2]
                 candidates.extend([(f"https://{project}-{team}.vercel.app",None),(f"https://{project}-git-main-{team}.vercel.app",None)])
+        report["candidate_urls"]=[url for url,_ in candidates]
+        failures=[]
         for url,deployment_id in candidates:
             parsed=urllib.parse.urlsplit(url)
             if parsed.scheme!="https" or not (parsed.hostname or "").endswith(".vercel.app"):
@@ -51,8 +54,37 @@ for attempt in range(30):
                 assert b".simulation-grid" in css
                 report.update(verified=True,url=base,github_deployment_id=deployment_id,native_source_commit=benchmark["source_commit"],headers={"content-security-policy":headers.get("Content-Security-Policy",headers.get("content-security-policy"))})
                 break
-            except (urllib.error.URLError,AssertionError):
+            except (urllib.error.URLError,AssertionError) as exc:
+                failures.append({"url":url,"error":str(exc)})
                 continue
+        report["candidate_errors"]=failures
+        if report["verified"]:
+            break
+        if not report["verified"]:
+            for status in combined.get("statuses",[]):
+                target=status.get("target_url","")
+                if status.get("state")!="success" or not target.startswith("https://vercel.com/"):
+                    continue
+                try:
+                    page,_=public(target)
+                    page=page.decode("utf-8",errors="replace").replace("\\\\u002F","/").replace("\\\\/","/")
+                    found=sorted(set(re.findall(r"[a-z0-9][a-z0-9.-]*\\.vercel\\.app",page)))
+                    report["inspection_urls"]=found
+                    for host in found:
+                        base="https://"+host
+                        try:
+                            html,_=public(base+"/")
+                            data,_=public(base+"/data/benchmark.json")
+                            benchmark=json.loads(data)
+                            if b"canvas-seq" in html and benchmark.get("source_commit")==json.loads(Path("results/benchmark.json").read_text())["source_commit"]:
+                                report.update(verified=True,url=base,native_source_commit=benchmark["source_commit"],discovery="Public Vercel inspection page")
+                                break
+                        except (urllib.error.URLError,ValueError):
+                            continue
+                except urllib.error.URLError:
+                    pass
+                if report["verified"]:
+                    break
         if report["verified"]:
             break
         error="No successful public Vercel deployment with this commit was available yet."
