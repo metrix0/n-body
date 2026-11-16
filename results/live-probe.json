@@ -1,0 +1,38 @@
+{
+  "commit": "ba9690d048ce86ac6e6182a2beb78e77593cbf9a",
+  "statuses": [
+    {
+      "url": "https://api.github.com/repos/metrix0/n-body/statuses/e40aeb09112006f658801d85c329686b8596cf0e",
+      "avatar_url": "https://avatars.githubusercontent.com/in/8329?v=4",
+      "id": 59084093914,
+      "node_id": "SC_kwDOVw-1is8AAAANwa-52g",
+      "state": "success",
+      "description": "Deployment has completed",
+      "target_url": "https://vercel.com/metrix0s-projects/n-body/J5aseWofXS1pykTBWEn4JSK2YUzT",
+      "context": "Vercel",
+      "created_at": "2026-11-16T22:58:21Z",
+      "updated_at": "2026-11-16T22:58:21Z"
+    }
+  ],
+  "inspection": {
+    "https://vercel.com/metrix0s-projects/n-body/J5aseWofXS1pykTBWEn4JSK2YUzT": {
+      "domains": [],
+      "size": 2252121,
+      "title": [
+        "n-body \u2013 Deployment Overview \u2013 Vercel"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "url": "https://n-body-git-main-metrix0s-projects.vercel.app",
+      "verified": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "url": "https://n-body-metrix0s-projects.vercel.app",
+      "verified": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    }
+  ]
+}
