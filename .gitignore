@@ -1,0 +1,5 @@
+build/
+node_modules/
+test-results/
+.vercel/
+__pycache__/
