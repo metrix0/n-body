@@ -1,5 +1,5 @@
 {
-  "commit": "ba9690d048ce86ac6e6182a2beb78e77593cbf9a",
+  "commit": "59b2b42bd533489f3a33a5d0a6cb201598e85685",
   "statuses": [
     {
       "url": "https://api.github.com/repos/metrix0/n-body/statuses/e40aeb09112006f658801d85c329686b8596cf0e",
@@ -17,7 +17,7 @@
   "inspection": {
     "https://vercel.com/metrix0s-projects/n-body/J5aseWofXS1pykTBWEn4JSK2YUzT": {
       "domains": [],
-      "size": 2252121,
+      "size": 2215261,
       "title": [
         "n-body \u2013 Deployment Overview \u2013 Vercel"
       ]
@@ -26,11 +26,19 @@
   "checks": [
     {
       "url": "https://n-body-git-main-metrix0s-projects.vercel.app",
+      "final_url": "https://vercel.com/login?next=%2Fsso-api%3Furl%3Dhttps%253A%252F%252Fn-body-git-main-metrix0s-projects.vercel.app%252F%26nonce%3D356fb791bdee49ea014089bca6c7b8463746fb607f7a3020a9fb0d3cfc58b0a9",
+      "title": [
+        "Login \u2013 Vercel"
+      ],
       "verified": false,
       "error": "Expecting value: line 1 column 1 (char 0)"
     },
     {
       "url": "https://n-body-metrix0s-projects.vercel.app",
+      "final_url": "https://vercel.com/login?next=%2Fsso-api%3Furl%3Dhttps%253A%252F%252Fn-body-metrix0s-projects.vercel.app%252F%26nonce%3De89f5a70ea7afb30f82fc7882d8c681c38202ac2c70ce771956116c12e7af5bb",
+      "title": [
+        "Login \u2013 Vercel"
+      ],
       "verified": false,
       "error": "Expecting value: line 1 column 1 (char 0)"
     }
