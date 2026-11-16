@@ -1,0 +1,46 @@
+name: Browser and static application
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "tests/**", "scripts/build.mjs", "package.json", "playwright.config.mjs", "vercel.json", ".github/workflows/web.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  web:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Build native reference and install browser test dependencies
+        run: |
+          make all
+          npm install --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Check the browser arithmetic, build, and run the interface
+        id: checks
+        run: |
+          set -o pipefail
+          npm test
+          npm run build
+          npm run test:browser 2>&1 | tee /tmp/nbody-web-tests.txt
+      - name: Publish validation and screenshots
+        if: always()
+        env:
+          OUTCOME: ${{ steps.checks.outcome }}
+        run: |
+          mkdir -p results
+          cp /tmp/nbody-web-tests.txt results/web-tests.txt || true
+          python3 - <<'PY'
+          import json, os, pathlib
+          pathlib.Path("results/web-status.json").write_text(json.dumps({"outcome": os.environ["OUTCOME"], "commit": os.environ["GITHUB_SHA"], "run": os.environ["GITHUB_RUN_ID"]}, indent=2) + "\n")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results
+          git diff --cached --quiet || git commit -m "Record browser validation and desktop/mobile screenshots"
+          git pull --rebase origin main
+          git push

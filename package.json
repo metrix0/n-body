@@ -1,0 +1,14 @@
+{
+  "name": "n-body-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/kernel.test.mjs",
+    "test:browser": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
